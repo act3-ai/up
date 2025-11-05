@@ -1,63 +1,85 @@
 # ASCE Tools
 
+## Intended Audience
+
+**ASCE Tools** provides resources for ACT3 team members.
+
 ## Overview
 
-ASCE Tools is a collection of common software packages for ASCE users and ACT3 developers.
-
-Software installed by the ASCE Tools command will be kept up-to-date with `brew upgrade`.
-
-> [!IMPORTANT]
->
-> The [ACT3 Homebrew Tap's prerequisites](https://github.com/act3-ai/homebrew-tap#prerequisites) are required in order to install ACT3 packages included in ASCE Tools.
+**ASCE tools** uses the ACT3 Homebrew tap and other public taps for public software packages ACT3 team members use.
 
 ## Usage
 
-It is recommended to use the ACT3 Homebrew Tap's `asce-tools` command to install ASCE Tools. If you would like to install ASCE Tools without using the ACT3 Homebrew Tap, follow the [standalone usage instructions](#standalone-usage) below.
+### Recommended Usage
 
-To add the ACT3 Homebrew Tap, run:
+Add the ACT3 Homebrew Tap:
+
+> [!TIP]
+> Running the ACT3 Login script will add the ACT3 Homebrew Tap.
 
 ```sh
 brew tap act3-ai/tap
 ```
 
-Then, run the `asce-tools` command:
+Then, select one of the following options for installing ASCE Tools.
+
+Install ASCE Tools:
 
 ```sh
 brew asce-tools
 ```
 
-### Standalone Usage
-
-ASCE Tools can be installed without the use of the ACT3 Homebrew Tap using Homebrew's [`brew bundle` command](https://github.com/Homebrew/homebrew-bundle).
-
-Clone the [ASCEup](https://gitlab.com/act3-ai/asce/up) repository to your system:
+Install ASCE Tools and VS Code extensions:
 
 ```sh
-git clone https://gitlab.com/act3-ai/asce/up.git
+brew asce-tools --vscode
 ```
 
-Then, install ASCE Tools by running `brew bundle` on the [ASCE Tools Brewfile](./Brewfile):
+### Optional Usage
+
+ASCE Tools can be installed without the use of the ACT3 Homebrew Tap using Homebrew's [`brew bundle` command ↗](https://github.com/Homebrew/homebrew-bundle).
+
+Clone the [Up](https://github.com/act3-ai/up/) repository to your system:
 
 ```sh
-# Install ASCE Tools Homebrew Formulae
-brew bundle -v --file ./up/asce-tools/Brewfile
+git clone https://github.com/act3-ai/up.git
+```
 
-# Install ASCE Tools VS Code Extensions
+Then, run `brew bundle` on the [ASCE Tools Brewfile](./Brewfile) of your choosing.
+
+> [!TIP]
+> The `-v`/`--verbose` flag is used to output formula caveats, which can contain important post-installation instructions.
+
+Install Homebrew tools:
+
+```sh
+brew bundle -v --file ./up/asce-tools/Brewfile
+```
+
+Or, install Homebrew tools and VS Code extensions:
+
+```sh
 brew bundle -v --file ./up/asce-tools/Brewfile-vscode --formula
 ```
 
-> [!TIP]
->
-> The `-v`/`--verbose` flag is used to output formula caveats, which can contain important post-installation instructions
-
-To install Kubectl and Helm plugins, run the `kubectl-plugins` and `helm-plugins` scripts:
+Install Kubectl plugins:
 
 ```sh
-# Install Kubectl plugins
 ./up/asce-tools/kubectl-plugins
+```
 
-# Install Helm plugins
+Install Helm plugins:
+
+```sh
 ./up/asce-tools/helm-plugins
+```
+
+## Updates
+
+Update software installed by the ASCE Tools command:
+
+```sh
+brew upgrade
 ```
 
 ## Packages
@@ -66,13 +88,11 @@ To install Kubectl and Helm plugins, run the `kubectl-plugins` and `helm-plugins
 
 The following ACT3 Homebrew Formulae are included in ASCE Tools:
 
-- [`ace-dt`](https://git.act3-ace.com/ace/data/tool): ASCE Data Tool
-- [`asce-hub-cli`](https://git.act3-ace.com/ace/hub/cli): ASCE Hub CLI
-- [`asce`](https://git.act3-ace.com/ace/cli): ASCE CLI
-- [`act3-pt`](https://devsecops.git.act3-ace.com/act3-pt): ACT3 Project Tool
-- [`kubectl-equilibria`](https://git.act3-ace.com/ace/equilibria#kubectl-plugin): ASCE Equilibria `kubectl` plugin
+- [`ace-dt`](https://github.com/act3-ai/data-tool): ASCE Data Tool
+- [`act3-pt`](https://gitlab.com/act3-ai/asce/pt): ACT3 Project Tool
+<!-- update link to act3-pt after it moves to GitHub -->
 
-The following third-party Homebrew Formulae are included in ASCE Tools:
+The following third-party ↗ Homebrew Formulae are included in ASCE Tools:
 
 - [`container-structure-test`](https://github.com/GoogleContainerTools/container-structure-test)
 - [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/README.md)
@@ -97,7 +117,7 @@ The following third-party Homebrew Formulae are included in ASCE Tools:
 
 ### Kubectl Plugins
 
-The following [`kubectl` plugins](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins) are included in ASCE Tools:
+The following third-party [`kubectl` plugins](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins) are included in ASCE Tools:
 
 - [`kubectl view-secret`](https://artifacthub.io/packages/krew/krew-index/view-secret)
 - [`kubectl view-allocations`](https://github.com/elsesiy/kubectl-view-secret)
@@ -106,13 +126,13 @@ The following [`kubectl` plugins](https://kubernetes.io/docs/tasks/extend-kubect
 
 ### Helm Plugins
 
-The following [`helm` plugins] are included in ASCE Tools:
+The following third-party ↗[`helm` plugins] are included in ASCE Tools:
 
 - [`helm diff`](https://github.com/databus23/helm-diff)
 
 ### VS Code Extensions
 
-The following VS Code extensions are included in ASCE Tools:
+The following third-party ↗ VS Code extensions are included in ASCE Tools:
 
 - [`bierner.markdown-mermaid`](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
 - [`DavidAnson.vscode-markdownlint`](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
@@ -150,10 +170,13 @@ The following VS Code extensions are included in ASCE Tools:
 - [`tomoki1207.pdf`](https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf)
 - [`twxs.cmake`](https://marketplace.visualstudio.com/items?itemName=twxs.cmake)
 - [`yzane.markdown-pdf`](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
-- [`yzhang.markdown-all-in-one`](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+- [`yzhang.markdown-all-in-one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
 ## Support
+<!-- act3-pt ignore -->
+<!-- act3-pt ../docs/support.md section:support -->
+<!-- timestamp:2025-10-29,09:24:22 -->
+- **[Troubleshooting FAQ](../docs/troubleshooting-faq.md)**: consult a list of troubleshooting options and frequently asked questions
+- **[Create a Support Ticket issue](https://github.com/act3-ai/up/issues)**: create a support ticket issue on the Up GitHub project
 
-- **[Troubleshooting FAQ](../docs/troubleshooting-faq.md)**: consult list of frequently asked questions and their answers.
-- **[Create a support ticket](https://gitlab.com/act3-ai/asce/up/issues/new)**: create a support ticket issue on the ASCEup GitLab project.
-- **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance.
+<!-- act3-pt end -->
