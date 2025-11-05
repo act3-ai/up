@@ -76,8 +76,8 @@ sudo reboot
   - Select **Privacy and Security**
   - Select **View Certificates**
   - Select **Import**
-  - Navigate to the `.cache/ace/aceup/dod-certs/certificates_pkcs7_v5_12_dod` directory inside of the user's home directory
-    - Example: ex: /home/USERNAME/.cache/ace/aceup/dod-certs/certificates_pkcs7_v5_12_dod/certificates_pkcs7_v5_12_dod_der.p7b
+  - Navigate to the `$XDG_CACHE_HOME/asce/up/dod-certs/certificates_pkcs7_v5_12_dod` directory inside of the user's home directory
+    - Example: ex: `/home/USERNAME/.cache/asce/up/dod-certs/certificates_pkcs7_v5_12_dod/certificates_pkcs7_v5_12_dod_der.p7b`
   - Upload the file named `certificates_pkcs7_v5_12_dod_der.p7b`
   - Uploading the file automatically presents the trust checkboxes for the DoD CA 6
   - Check all boxes to trust the cert and select **OK**

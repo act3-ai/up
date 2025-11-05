@@ -1,4 +1,4 @@
-# ACEup Troubleshooting & FAQ
+# ASCEup Troubleshooting & FAQ
 
 <!--This document is a place to capture questions that have come up repeatedly by existing users and that can be answered in a helpful manner through written documentation. The contents included here should be generalizable enough to apply to all users with the same or similar questions. This is not an appropriate place to document issues or questions that are individualized to a particular environment or use case.-->
 
@@ -18,7 +18,7 @@ If you are not able to identify the problem, first consult the FAQs below. Then,
    - Remove all references to `credsStore` and `credHelpers`
    - Re-run ACT3 Login
 
-If you are still not able to resolve the issue, [create a support ticket](https://git.act3-ace.com/ace/aceup/-/issues/new?issuable_template=Support%20Ticket).
+If you are still not able to resolve the issue, [create a support ticket](https://gitlab.com/act3-ai/asce/up/-/issues/new?issuable_template=Support%20Ticket).
 
 ## Troubleshooting
 
@@ -66,7 +66,7 @@ If the command fails with an exit code of 2, the ssh-agent is not running on you
 
 ### How do I find the logs for ACT3 Login script?
 
-ACT3 Login produces a log file at the location `$XDG_CACHE_HOME/aceup/act3-login/logs.txt`. If `$XDG_CACHE_HOME` unset or empty on your system, its default value is used. ACT3 Login prints the path to the log file on your system after the welcome message, in the format `Created log file <log file>`. If the script aborts, the path to the log file will be printed to your terminal before exiting.
+ACT3 Login produces a log file at the location `$XDG_CACHE_HOME/up/act3-login/logs.txt`. If `$XDG_CACHE_HOME` unset or empty on your system, its default value is used. ACT3 Login prints the path to the log file on your system after the welcome message, in the format `Created log file <log file>`. If the script aborts, the path to the log file will be printed to your terminal before exiting.
 
 Note: WSL2 users can open File Explorer from the Ubuntu terminal by running `explorer.exe <path>`
 
@@ -74,12 +74,12 @@ Note: WSL2 users can open File Explorer from the Ubuntu terminal by running `exp
 >
 > | System | Default `$XDG_CACHE_HOME` | Default log file                           |
 > | ------ | ------------------------- | ------------------------------------------ |
-> | Linux  | `$HOME/.cache`            | `$HOME/.cache/aceup/act3-login/logs.txt`         |
-> | macOS  | `$HOME/Library/Caches`    | `$HOME/Library/Caches/aceup/act3-login/logs.txt` |
+> | Linux  | `$HOME/.cache`            | `$HOME/.cache/up/act3-login/logs.txt`         |
+> | macOS  | `$HOME/Library/Caches`    | `$HOME/Library/Caches/up/act3-login/logs.txt` |
 
 ### My GitLab Personal Access Token expired. How do I update it?
 
-1. Run the [ACT3 Login script](https://github.com/act3-ace/aceup#run-act3-login). You will be prompted to create a new Personal Access Token.
+1. Run the [ACT3 Login script](https://gitlab.com/act3-ai/asce/up#run-act3-login). You will be prompted to create a new Personal Access Token.
 2. Create a token with the scope of `api` selected.
 3. Provide the value of the new token when prompted.
 

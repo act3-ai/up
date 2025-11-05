@@ -1,12 +1,8 @@
-# ACEup
-
-> [!WARNING] THIS REPOSITORY HAS MIGRATED
->
-> The ACEup repository has moved to GitLab: <https://gitlab.com/act3-ai/asce/up>
+# ASCEup
 
 ## Overview
 
-The ACEup repository is a collection of script-based tools and resources to bootstrap access to ACT3 services. The following tools are contained in this repo:
+The ASCEup repository is a collection of script-based tools and resources to bootstrap access to ACT3 services. The following tools are contained in this repo:
 
 - [ACT3 Login script](./act3-login/README.md)
 - [DoD Certs script](./dod-certs/README.md)
@@ -29,10 +25,11 @@ ACT3 Login will automatically:
 
 Run the [ACT3 Login script](./act3-login/README.md):
 
+<!-- act3-pt ignore -->
 <!-- act3-pt ./act3-login/README.md section:run-act3-login -->
 <!-- timestamp:2024-02-23,17:03:13 -->
 ```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/act3-login/act3-login)"
+/usr/bin/env bash -c "$(curl -fsSL https://gitlab.com/act3-ai/asce/up/-/raw/main/act3-login/act3-login)"
 ```
 
 > [!IMPORTANT]
@@ -42,6 +39,7 @@ Run the [ACT3 Login script](./act3-login/README.md):
 
 ### New User Setup
 
+<!-- act3-pt ignore -->
 <!-- act3-pt ./act3-login/README.md section:new-user-setup -->
 After running the login script above, new users should also consider installing common ASCE Tools by running the `asce-tools` command:
 
@@ -54,13 +52,13 @@ brew asce-tools
 ### Smart Card Reader Setup
 
 <!-- act3-pt ./smart-card-reader/README.md section:recommended-usage -->
-<!-- timestamp:2024-02-23,17:00:20 -->
+<!-- timestamp:2024-10-01,10:26:09 -->
 Ubuntu users who need to install and configure their system to work with a smart card reader should complete the following:
 
 Run the [`enable-smart-card-reader` script](./smart-card-reader/enable-smart-card-reader).
 
 ```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/act3-login/act3-login)"
+/usr/bin/env bash -c "$(curl -fsSL https://gitlab.com/act3-ai/asce/up/-/raw/main/smart-card-reader/enable-smart-card-reader)"
 ```
 <!-- act3-pt end -->
 
@@ -68,22 +66,22 @@ Run the [`enable-smart-card-reader` script](./smart-card-reader/enable-smart-car
 
 ## Optional Usage: Clone Repo and Run
 
-Clone the [ACEup](https://github.com/act3-ace/aceup) repository to your system:
+Clone the [ASCEup](https://gitlab.com/act3-ai/asce/up) repository to your system:
 
 ```sh
-git clone https://github.com/act3-ace/aceup.git
+git clone https://gitlab.com/act3-ai/asce/up.git
 ```
 
 Then, run the desired script:
 
 ```sh
-./aceup/<path to script>
+./up/<path to script>
 ```
 
 ## Support
 
 - **[Troubleshooting FAQ](docs/troubleshooting-faq.md)**: consult list of frequently asked questions and their answers
-- **[Create a Support Ticket issue](https://github.com/act3-ace/aceup/issues/new)**: create a support ticket issue on the ACEup GitHub project
+- **[Create a Support Ticket issue](https://gitlab.com/act3-ai/asce/up/issues/new)**: create a support ticket issue on the ASCEup GitLab project
 - **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance
 
 ---

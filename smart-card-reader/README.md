@@ -27,27 +27,23 @@ Ubuntu users who need to install and configure their system to work with a smart
 Run the [`enable-smart-card-reader` script](./enable-smart-card-reader).
 
 ```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/act3-login/act3-login)"
+/usr/bin/env bash -c "$(curl -fsSL https://gitlab.com/act3-ai/asce/up/-/raw/main/smart-card-reader/enable-smart-card-reader)"
 ```
 
 ### Optional Usage
 
 #### Clone Repo and Run
 
-Clone the [ACEup](https://github.com/act3-ace/aceup) repository to your system:
+Clone the [ASCEup](https://gitlab.com/act3-ai/asce/up) repository to your system:
 
 ```sh
-# SSH Authentication
-git clone ssh://git@github.com/act3-ace/aceup.git
-
-# HTTPS Authentication
-git clone https://github.com/act3-ace/aceup.git
+git clone https://gitlab.com/act3-ai/asce/up.git
 ```
 
 Then, run the [`enable-smart-card-reader` script](./enable-smart-card-reader):
 
 ```sh
-./aceup/smart-card-reader/enable-smart-card-reader
+./up/smart-card-reader/enable-smart-card-reader
 ```
 
 ### Verification Process
@@ -76,5 +72,5 @@ Slot 0 (0x0): Broadcom Corp 5880 [Contacted SmartCard] (0123456789ABCD) 00 00
 ## Support
 
 - **[Troubleshooting FAQ](faq.md)**: consult list of frequently asked questions and their answers.
-- **[Create a support ticket](https://github.com/act3-ace/aceup/issues/new)**: create a support ticket issue on the ACEup GitHub project.
+- **[Create a support ticket](https://gitlab.com/act3-ai/asce/up/issues/new)**: create a support ticket issue on the ASCEup GitLab project.
 - **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance.

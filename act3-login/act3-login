@@ -19,7 +19,6 @@ Help() {
   echo
   echo "Syntax: $(basename "$0") [-t] [-h]"
   echo "options:"
-  echo "t     Testing mode."
   echo "h     Print this Help."
   echo
 }
@@ -28,15 +27,11 @@ Help() {
 # Process the input options. Add options as needed.
 ############################################################
 # Get the options
-while getopts "u:t:h" flag; do
+while getopts "u:h" flag; do
   case "${flag}" in
   h) # display Help
     Help
     exit
-    ;;
-  t)
-    TEST="$OPTARG"
-    echo "Running in test mode, will use \"$TEST\" as private script"
     ;;
   *) echo "Invalid option: -$flag" ;;
   esac
@@ -202,9 +197,12 @@ is_ubuntu() {
     [ -f /etc/os-release ] && grep -qi 'ubuntu' /etc/os-release
 }
 
-# Checks /etc/os-release for "22.04" to determine if running Ubuntu 22.04
+# Checks /etc/os-release for Ubuntu version "22.04" to determine if running Ubuntu 22.04
 is_ubuntu_22() {
   is_ubuntu && grep -q '22.04' /etc/os-release
+}
+is_ubuntu_24() {
+  is_ubuntu && grep -q '24.04' /etc/os-release
 }
 
 ############################################################
@@ -249,8 +247,8 @@ append_to_file() {
 
 check_logs() {
   box_out "Check log file: ${bold}${LOG_FILE}${normal}" \
-    "Troubleshooting: ${bold}https://github.com/act3-ace/aceup/blob/main/docs/troubleshooting-faq.md${normal}" \
-    "Create Support Ticket: ${bold}https://git.act3-ace.com/ace/aceup/-/issues/new?issuable_template=Support%20Ticket${normal}"
+    "Troubleshooting: ${bold}https://gitlab.com/act3-ai/asce/up/blob/main/docs/troubleshooting-faq.md${normal}" \
+    "Create Support Ticket: ${bold}https://gitlab.com/act3-ai/asce/up/-/issues/new?issuable_template=Support%20Ticket${normal}"
 }
 
 abort() {
@@ -305,7 +303,7 @@ else
   XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 fi
 
-CACHE="$XDG_CACHE_HOME/aceup/act3-login"
+CACHE="$XDG_CACHE_HOME/asce/up/act3-login"
 LOG_FILE="$CACHE/logs.txt"
 create_log_file
 
@@ -323,7 +321,9 @@ system_check() {
 
   echo -n "Checking system... "
 
-  if is_ubuntu_22; then
+  if is_ubuntu_24; then
+    success "Detected Ubuntu 24.04"
+  elif is_ubuntu_22; then
     success "Detected Ubuntu 22.04"
   elif is_ubuntu; then
     failure_red "Detected out-of-date Ubuntu"
@@ -383,7 +383,7 @@ validate_homebrew() {
 
   # Remove old Homebrew tap
   if [[ $(log_out brew tap) =~ "act3/ace-tools" ]]; then
-    if log_eval brew untap act3/ace-tools; then
+    if log_eval brew untap --force act3/ace-tools; then
       success "Removed the deprecated ${bold}act3/ace-tools${normal} Homebrew tap"
     else
       failure "Could not remove the deprecated ${bold}act3/ace-tools${normal} Homebrew tap"
@@ -406,7 +406,7 @@ validate_homebrew
 
 # CHECK IF dev-tools IS INSTALLED AND EXPLAIN HOW TO UNINSTALL
 if is_linux && dpkg -s dev-tools >/dev/null 2>&1; then
-  warning_yellow "WARNING: The deprecated ACT3 \"dev-tools\" Debian package is installed on your system and will conflict with the ACE Tools Homebrew formula. Remove with \"apt remove dev-tools\""
+  warning_yellow "WARNING: The ACT3 \"dev-tools\" Debian package is installed on your system and will conflict with the ACT3 Homebrew Tap. Remove with \"apt remove dev-tools\""
 fi
 
 ############################################################
@@ -425,7 +425,7 @@ brew "oras"
 brew "docker-credential-helper"
 brew "glab"
 brew "kubectl"
-brew "int128/kubelogin/kubelogin"
+brew "kubelogin"
 EOF
 
 ############################################################
@@ -814,6 +814,14 @@ authenticate() {
     fi
   fi
 
+  echo 'brew "act3-ai/tap/act3-pt"' | brew bundle --file=-
+  if log_eval "$HOMEBREW_PREFIX/bin/act3-pt" catalog add https://git.act3-ace.com/devsecops/blueprints/catalog.git; then
+    success "Added the ACT3 Blueprint Catalog"
+  else
+    failure "Failed to add the ACT3 Blueprint Catalog"
+    check_logs
+  fi
+
   ############################################################
   # ACE Data Tool Telemetry Server Configuration
   ############################################################
@@ -871,7 +879,7 @@ EOF
 
   install_dod_certs() {
     echo "Running the dod-certs script"
-    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/dod-certs/dod-certs)"
+    /usr/bin/env bash -c "$(curl -fsSL https://gitlab.com/act3-ai/asce/up/-/raw/main/dod-certs/dod-certs)"
   }
 
   read -r -p "Do you wish to proceed?
@@ -913,6 +921,7 @@ apiVersion: v1
 clusters:
 - cluster:
     server: https://k8s.ace.act3.ai
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlakNDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpReU56YzJOamMwTUI0WERUSXlNREV5TVRFME5URXhORm9YRFRNeU1ERXhPVEUwTlRFeApORm93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZME1qYzNOalkzTkRCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJMRDRDdkRFVHYwL3VVdUJjUlV1MDcvN3RGMTBVTU9TOWlWa1FrekIKSGg1ai9jak4vUThNM2pycTRYVWttR2VhVG9QalhrZjQ0MjNVRzV3cGM5V3NjdFdqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWxKNy8wY2k2VzBKODJLd2NwCjhqMW96Vk5WampBS0JnZ3Foa2pPUFFRREFnTkpBREJHQWlFQTdXTy9NRXlMYnJ6Z2ZacDRRdkx5RzltSjNrMGkKeDFxRFlWSUNWQnYrbG1vQ0lRRExMN3R4UFA1SDB0bndvVW1JTy8xOEtjVUI3MzZOanh3eDB4WnNPeEYzMWc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
   name: lion-public
 - cluster:
     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlakNDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpReU56YzJOamMwTUI0WERUSXlNREV5TVRFME5URXhORm9YRFRNeU1ERXhPVEUwTlRFeApORm93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZME1qYzNOalkzTkRCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJMRDRDdkRFVHYwL3VVdUJjUlV1MDcvN3RGMTBVTU9TOWlWa1FrekIKSGg1ai9jak4vUThNM2pycTRYVWttR2VhVG9QalhrZjQ0MjNVRzV3cGM5V3NjdFdqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWxKNy8wY2k2VzBKODJLd2NwCjhqMW96Vk5WampBS0JnZ3Foa2pPUFFRREFnTkpBREJHQWlFQTdXTy9NRXlMYnJ6Z2ZacDRRdkx5RzltSjNrMGkKeDFxRFlWSUNWQnYrbG1vQ0lRRExMN3R4UFA1SDB0bndvVW1JTy8xOEtjVUI3MzZOanh3eDB4WnNPeEYzMWc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
@@ -983,7 +992,7 @@ EOF
   [ -f "$HOME/.kube/config" ] && chmod 600 "$HOME/.kube/config"
 
   ############################################################
-  # ACE Hub User Configuration File
+  # ACE Hub authentication
   ############################################################
 
   echo
@@ -1002,7 +1011,9 @@ EOF
 
     cat <<EOF >"$ACE_HUB_USER_FILE"
 {
-	"env": {},
+	"env": {
+    "ACE_USER": "$USERNAME"
+  },
 	"envFiles": {
 		"NETRC": "machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN",
 		"REGISTRY_AUTH_FILE": "{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}",
@@ -1112,7 +1123,7 @@ EOF
 
     # Create new secret
     if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret generic hub-envfile \
-      --from-literal=NETRC="machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN" \
+      --from-literal=NETRC="machine git.act3-ace.com login $USERNAME password $TOKEN" \
       --from-literal=REGISTRY_AUTH_FILE="{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}" \
       --from-literal=ACE_DT_TELEMETRY_USERNAME="$USERNAME" \
       --context "$context" -n "$user_namespace"; then
@@ -1133,6 +1144,43 @@ EOF
 
     # Add managed-by label
     if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-envfile app.kubernetes.io/managed-by=act3-login \
+      --context "$context" -n "$user_namespace"; then
+      success "Added label app.kubernetes.io/managed-by=act3-login"
+    else
+      failure "Could not add label app.kubernetes.io/managed-by=act3-login"
+      return 1
+    fi
+
+    echo "Refreshing ACE Hub env secret..."
+
+    # Delete existing secret
+    if ! log_eval "$HOMEBREW_PREFIX/bin/kubectl" delete secret hub-env --ignore-not-found \
+      --context "$context" -n "$user_namespace"; then
+      failure "Could not delete secret/hub-env"
+      return 1
+    fi
+
+    # Create new secret
+    if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret generic hub-env \
+      --from-literal=ACE_USER="$USERNAME" \
+      --context "$context" -n "$user_namespace"; then
+      success "Created secret/hub-env"
+    else
+      failure "Could not create secret/hub-env"
+      return 1
+    fi
+
+    # Label new secret
+    if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-env hub.act3-ace.io/secret-type=env \
+      --context "$context" -n "$user_namespace"; then
+      success "Added label hub.act3-ace.io/secret-type=env"
+    else
+      failure "Could not add label hub.act3-ace.io/secret-type=env"
+      return 1
+    fi
+
+    # Add managed-by label
+    if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-env app.kubernetes.io/managed-by=act3-login \
       --context "$context" -n "$user_namespace"; then
       success "Added label app.kubernetes.io/managed-by=act3-login"
     else

@@ -30,20 +30,20 @@ brew asce-tools
 
 ASCE Tools can be installed without the use of the ACT3 Homebrew Tap using Homebrew's [`brew bundle` command](https://github.com/Homebrew/homebrew-bundle).
 
-Clone the [ACEup](https://github.com/act3-ace/aceup) repository to your system:
+Clone the [ASCEup](https://gitlab.com/act3-ai/asce/up) repository to your system:
 
 ```sh
-git clone https://github.com/act3-ace/aceup.git
+git clone https://gitlab.com/act3-ai/asce/up.git
 ```
 
 Then, install ASCE Tools by running `brew bundle` on the [ASCE Tools Brewfile](./Brewfile):
 
 ```sh
 # Install ASCE Tools Homebrew Formulae
-brew bundle -v --file ./aceup/asce-tools/Brewfile
+brew bundle -v --file ./up/asce-tools/Brewfile
 
 # Install ASCE Tools VS Code Extensions
-brew bundle -v --file ./aceup/asce-tools/Brewfile-vscode --formula
+brew bundle -v --file ./up/asce-tools/Brewfile-vscode --formula
 ```
 
 > [!TIP]
@@ -54,10 +54,10 @@ To install Kubectl and Helm plugins, run the `kubectl-plugins` and `helm-plugins
 
 ```sh
 # Install Kubectl plugins
-./aceup/asce-tools/kubectl-plugins
+./up/asce-tools/kubectl-plugins
 
 # Install Helm plugins
-./aceup/asce-tools/helm-plugins
+./up/asce-tools/helm-plugins
 ```
 
 ## Packages
@@ -104,24 +104,29 @@ The following [`kubectl` plugins](https://kubernetes.io/docs/tasks/extend-kubect
 - [`kubectl konfig`](https://github.com/corneliusweig/konfig)
 - [`crossplane`](https://docs.crossplane.io/latest/cli) (not a kubectl plugin)
 
+### Helm Plugins
+
+The following [`helm` plugins] are included in ASCE Tools:
+
+- [`helm diff`](https://github.com/databus23/helm-diff)
+
 ### VS Code Extensions
 
 The following VS Code extensions are included in ASCE Tools:
 
-- [`DavidAnson.vscode-markdownlint`](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-- [`GitHub.remotehub`](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub)
-- [`GitHub.vscode-pull-request-github`](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)
-- [`GitLab.gitlab-workflow`](https://marketplace.visualstudio.com/items?itemName=GitLab.gitlab-workflow)
-- [`Gruntfuggly.todo-tree`](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
-- [`James-Yu.latex-workshop`](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
-- [`Remisa.shellman`](https://marketplace.visualstudio.com/items?itemName=Remisa.shellman)
 - [`bierner.markdown-mermaid`](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
+- [`DavidAnson.vscode-markdownlint`](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 - [`eamodio.gitlens`](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 - [`ecmel.vscode-html-css`](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)
 - [`esbenp.prettier-vscode`](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [`exiasr.hadolint`](https://marketplace.visualstudio.com/items?itemName=exiasr.hadolint)
 - [`foxundermoon.shell-format`](https://marketplace.visualstudio.com/items?itemName=foxundermoon.shell-format)
+- [`GitHub.remotehub`](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub)
+- [`GitHub.vscode-pull-request-github`](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)
+- [`GitLab.gitlab-workflow`](https://marketplace.visualstudio.com/items?itemName=GitLab.gitlab-workflow)
+- [`Gruntfuggly.todo-tree`](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
 - [`hediet.vscode-drawio`](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)
+- [`James-Yu.latex-workshop`](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
 - [`jeff-hykin.better-dockerfile-syntax`](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-dockerfile-syntax)
 - [`jinliming2.vscode-go-template`](https://marketplace.visualstudio.com/items?itemName=jinliming2.vscode-go-template)
 - [`mindaro.mindaro`](https://marketplace.visualstudio.com/items?itemName=mindaro.mindaro)
@@ -139,17 +144,16 @@ The following VS Code extensions are included in ASCE Tools:
 - [`njpwerner.autodocstring`](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring)
 - [`peterj.proto`](https://marketplace.visualstudio.com/items?itemName=peterj.proto)
 - [`redhat.vscode-yaml`](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
-- [`shd101wyy.markdown-preview-enhanced`](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
+- [`Remisa.shellman`](https://marketplace.visualstudio.com/items?itemName=Remisa.shellman)
 - [`tamasfe.even-better-toml`](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
 - [`timonwong.shellcheck`](https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck)
 - [`tomoki1207.pdf`](https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf)
 - [`twxs.cmake`](https://marketplace.visualstudio.com/items?itemName=twxs.cmake)
-- [`vincaslt.highlight-matching-tag`](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag)
 - [`yzane.markdown-pdf`](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
 - [`yzhang.markdown-all-in-one`](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
 ## Support
 
 - **[Troubleshooting FAQ](../docs/troubleshooting-faq.md)**: consult list of frequently asked questions and their answers.
-- **[Create a support ticket](https://github.com/act3-ace/aceup/issues/new)**: create a support ticket issue on the ACEup GitHub project.
+- **[Create a support ticket](https://gitlab.com/act3-ai/asce/up/issues/new)**: create a support ticket issue on the ASCEup GitLab project.
 - **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance.
