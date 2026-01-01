@@ -542,12 +542,12 @@ fi
 ############################################################
 # Authentication portion of the script
 # - Executes all authentication setup and storage tasks
-  # - Generates a new SSH key and adds it to GitLab
-  # - Configures HTTPS credentials for GitLab
-  # - Configures Git commit signing with SSH
-  # - Authenticates to a user-defined GitLab container registry
-  # - Sets up authentication for ACT3 Project Tool and GitLab CLI
-  # - Prompts user to install DoD certificates
+# - Generates a new SSH key and adds it to GitLab
+# - Configures HTTPS credentials for GitLab
+# - Configures Git commit signing with SSH
+# - Authenticates to a user-defined GitLab container registry
+# - Sets up authentication for ACT3 Project Tool and GitLab CLI
+# - Prompts user to install DoD certificates
 ############################################################
 ############################################################
 
@@ -773,7 +773,6 @@ authenticate() {
   echo
   echo "${bold}Setting up credentials for the specified GitLab container registry${normal}"
 
-
   configure_gitlab_registry() {
     echo "Configuring Gitlab Container Registry"
 
@@ -799,14 +798,14 @@ authenticate() {
       echo
       abort
     fi
-    }
+  }
 
-    read -r -p "Do you want to configure credentials for a GitLab container registry?
+  read -r -p "Do you want to configure credentials for a GitLab container registry?
   (y/n)>" yn
-    case $yn in
-    [Yy]*) configure_gitlab_registry || failure "Could not configure GitLab container registry" ;; # don't fail here
-    *) echo "Skipping GitLab container registry configuration" ;;
-    esac
+  case $yn in
+  [Yy]*) configure_gitlab_registry || failure "Could not configure GitLab container registry" ;; # don't fail here
+  *) echo "Skipping GitLab container registry configuration" ;;
+  esac
 
   ############################################################
   # ACT3 Project Tool GitLab API Credentials
@@ -864,37 +863,37 @@ authenticate() {
   #   success "Leaving existing ace-dt configuration file unchanged"
   # else
   #   cat <<EOF >"$ACE_DT_CONFIG"
-# ACE Data Tool Configuration
-# apiVersion: config.dt.act3-ace.io/v1alpha1
-# kind: Configuration
+  # ACE Data Tool Configuration
+  # apiVersion: config.dt.act3-ace.io/v1alpha1
+  # kind: Configuration
 
-# CachePruneMax is the maximum cache size after pruning
-# cachePruneMax: 500Mi
+  # CachePruneMax is the maximum cache size after pruning
+  # cachePruneMax: 500Mi
 
-# CachePath is the directory where the cache fields are stored
-# cachePath:
+  # CachePath is the directory where the cache fields are stored
+  # cachePath:
 
-# CompressionLevel is the level used for compression.  Valid values are min, normal, max
-# compressionLevel: normal
+  # CompressionLevel is the level used for compression.  Valid values are min, normal, max
+  # compressionLevel: normal
 
-# ChunkSize is the maximum size of a chunk used to upload blobs. 0 disables chunking
-# chunkSize: 100Mi
+  # ChunkSize is the maximum size of a chunk used to upload blobs. 0 disables chunking
+  # chunkSize: 100Mi
 
-# ConcurrentHTTP is the maximum number of HTTP requests that will be in flight at any given time. Must be positive.
-# concurrentHTTP: 25
+  # ConcurrentHTTP is the maximum number of HTTP requests that will be in flight at any given time. Must be positive.
+  # concurrentHTTP: 25
 
-# RegistryAuthFile is the file to use for credentials to an OCI registry.  Defaults to ~/.docker/config.json
-# registryAuthFile: ~/.docker/config.json
+  # RegistryAuthFile is the file to use for credentials to an OCI registry.  Defaults to ~/.docker/config.json
+  # registryAuthFile: ~/.docker/config.json
 
-# Telemetry configuration
-# telemetry:
-# - name: lion
-#   url: https://telemetry.lion.act3-ace.ai
-# telemetryUserName: $USERNAME
-# EOF
-#     success "Created ace-dt configuration file with telemetry server configuration"
-#     success "Configured Telemetry server integration"
-#   fi
+  # Telemetry configuration
+  # telemetry:
+  # - name: lion
+  #   url: https://telemetry.lion.act3-ace.ai
+  # telemetryUserName: $USERNAME
+  # EOF
+  #     success "Created ace-dt configuration file with telemetry server configuration"
+  #     success "Configured Telemetry server integration"
+  #   fi
 
   ############################################################
   # DoD Certificate Installation (optional)
@@ -905,8 +904,8 @@ authenticate() {
 
   install_dod_certs() {
     echo "Running the dod-certs script"
-    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs)"
-    }
+    curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash
+  }
 
   read -r -p "Do you wish to proceed?
 (y/n)>" yn
@@ -941,75 +940,75 @@ authenticate() {
   #   # Write to it
   #   {
   #     cat <<EOF >"$CLUSTERCONFIG"
-# Cluster config sourced from https://git.act3-ace.com/www/www.git.act3-ace.com/-/blob/master/docs/resources/kubernetes.md
-# kind: Config
-# apiVersion: v1
-# clusters:
-# - cluster:
-#     server: https://k8s.ace.act3.ai
-#   name: lion-public
-# - cluster:
-#     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlakNDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpReU56YzJOamMwTUI0WERUSXlNREV5TVRFME5URXhORm9YRFRNeU1ERXhPVEUwTlRFeApORm93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZME1qYzNOalkzTkRCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJMRDRDdkRFVHYwL3VVdUJjUlV1MDcvN3RGMTBVTU9TOWlWa1FrekIKSGg1ai9jak4vUThNM2pycTRYVWttR2VhVG9QalhrZjQ0MjNVRzV3cGM5V3NjdFdqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWxKNy8wY2k2VzBKODJLd2NwCjhqMW96Vk5WampBS0JnZ3Foa2pPUFFRREFnTkpBREJHQWlFQTdXTy9NRXlMYnJ6Z2ZacDRRdkx5RzltSjNrMGkKeDFxRFlWSUNWQnYrbG1vQ0lRRExMN3R4UFA1SDB0bndvVW1JTy8xOEtjVUI3MzZOanh3eDB4WnNPeEYzMWc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
-#     server: https://lion-ctl.act3-ace.ai:6443
-#   name: lion
-# - cluster:
-#     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpjeU56YzROVGcyTUI0WERUSXpNREV3TXpJd05ETXdObG9YRFRNeU1USXpNVEl3TkRNdwpObG93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZM01qYzNPRFU0TmpCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJHeUVGN05XVnZUUGt1eHFDREEydlRhZWg4c3crRTZ3V2tCUTFzSysKZzhDSDluVFpIRnUzTm56a3NjOHV5QkhRTnhtZ2JZMGhLY3EyZFJrTjJHbUxBeEtqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUVZIZmViaHhGZmNFUlhWY2dDCmJ0S2ZkSnl1b1RBS0JnZ3Foa2pPUFFRREFnTkhBREJFQWlCQ0FMb3YyRUptZENJdjZHajNKc2Q1aWtYZmNHMXkKWGo0aFlTeGpPVzFSZWdJZ2ZDczVFZU00a1JIcXpYWkxsMG95Z250SitrelhzOGFEaFdSa09GakE0VmM9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
-#     server: https://meerkat-ctl.act3-ace.ai:6443
-#   name: meerkat
-# users:
-# - name: gitlab-oidc
-#   user:
-#     exec:
-#       apiVersion: client.authentication.k8s.io/v1beta1
-#       args:
-#       - oidc-login
-#       - get-token
-#       - --oidc-issuer-url=https://git.act3-ace.com
-#       - --oidc-client-id=f784af5244e3f5875d932f99a82b0c4147b17fa656e58e0e1acaea3621db2c33
-#       command: kubectl
-#       env: null
-#       provideClusterInfo: false
-# contexts:
-# - context:
-#     cluster: lion-public
-#     user: gitlab-oidc
-#   name: lion
-# - context:
-#     cluster: meerkat
-#     user: gitlab-oidc
-#   name: meerkat
-# current-context: lion
-# EOF
-#       success "Created cluster configuration file ${bold}${CLUSTERCONFIG}${normal}"
-#     } || failure "Could not create cluster configuration file ${bold}${CLUSTERCONFIG}${normal}"
+  # Cluster config sourced from https://git.act3-ace.com/www/www.git.act3-ace.com/-/blob/master/docs/resources/kubernetes.md
+  # kind: Config
+  # apiVersion: v1
+  # clusters:
+  # - cluster:
+  #     server: https://k8s.ace.act3.ai
+  #   name: lion-public
+  # - cluster:
+  #     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlakNDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpReU56YzJOamMwTUI0WERUSXlNREV5TVRFME5URXhORm9YRFRNeU1ERXhPVEUwTlRFeApORm93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZME1qYzNOalkzTkRCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJMRDRDdkRFVHYwL3VVdUJjUlV1MDcvN3RGMTBVTU9TOWlWa1FrekIKSGg1ai9jak4vUThNM2pycTRYVWttR2VhVG9QalhrZjQ0MjNVRzV3cGM5V3NjdFdqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUWxKNy8wY2k2VzBKODJLd2NwCjhqMW96Vk5WampBS0JnZ3Foa2pPUFFRREFnTkpBREJHQWlFQTdXTy9NRXlMYnJ6Z2ZacDRRdkx5RzltSjNrMGkKeDFxRFlWSUNWQnYrbG1vQ0lRRExMN3R4UFA1SDB0bndvVW1JTy8xOEtjVUI3MzZOanh3eDB4WnNPeEYzMWc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  #     server: https://lion-ctl.act3-ace.ai:6443
+  #   name: lion
+  # - cluster:
+  #     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIrZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWtNU0l3SUFZRFZRUUREQmx5YTJVeUxYTmwKY25abGNpMWpZVUF4TmpjeU56YzROVGcyTUI0WERUSXpNREV3TXpJd05ETXdObG9YRFRNeU1USXpNVEl3TkRNdwpObG93SkRFaU1DQUdBMVVFQXd3WmNtdGxNaTF6WlhKMlpYSXRZMkZBTVRZM01qYzNPRFU0TmpCWk1CTUdCeXFHClNNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJHeUVGN05XVnZUUGt1eHFDREEydlRhZWg4c3crRTZ3V2tCUTFzSysKZzhDSDluVFpIRnUzTm56a3NjOHV5QkhRTnhtZ2JZMGhLY3EyZFJrTjJHbUxBeEtqUWpCQU1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01CMEdBMVVkRGdRV0JCUVZIZmViaHhGZmNFUlhWY2dDCmJ0S2ZkSnl1b1RBS0JnZ3Foa2pPUFFRREFnTkhBREJFQWlCQ0FMb3YyRUptZENJdjZHajNKc2Q1aWtYZmNHMXkKWGo0aFlTeGpPVzFSZWdJZ2ZDczVFZU00a1JIcXpYWkxsMG95Z250SitrelhzOGFEaFdSa09GakE0VmM9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  #     server: https://meerkat-ctl.act3-ace.ai:6443
+  #   name: meerkat
+  # users:
+  # - name: gitlab-oidc
+  #   user:
+  #     exec:
+  #       apiVersion: client.authentication.k8s.io/v1beta1
+  #       args:
+  #       - oidc-login
+  #       - get-token
+  #       - --oidc-issuer-url=https://git.act3-ace.com
+  #       - --oidc-client-id=f784af5244e3f5875d932f99a82b0c4147b17fa656e58e0e1acaea3621db2c33
+  #       command: kubectl
+  #       env: null
+  #       provideClusterInfo: false
+  # contexts:
+  # - context:
+  #     cluster: lion-public
+  #     user: gitlab-oidc
+  #   name: lion
+  # - context:
+  #     cluster: meerkat
+  #     user: gitlab-oidc
+  #   name: meerkat
+  # current-context: lion
+  # EOF
+  #       success "Created cluster configuration file ${bold}${CLUSTERCONFIG}${normal}"
+  #     } || failure "Could not create cluster configuration file ${bold}${CLUSTERCONFIG}${normal}"
 
-#     if [ -f "$HOME/.kube/config" ]; then
-#       backup="$HOME/.kube/config.bak-$(date +%s)"
-#       {
-#         cp "$HOME/.kube/config" "$backup"
-#         success "Backed up existing configuration to ${bold}$backup${normal}"
-#       } || {
-#         failure "Could not back up existing configuration, aborting"
-#         return 1
-#       }
-#     fi
+  #     if [ -f "$HOME/.kube/config" ]; then
+  #       backup="$HOME/.kube/config.bak-$(date +%s)"
+  #       {
+  #         cp "$HOME/.kube/config" "$backup"
+  #         success "Backed up existing configuration to ${bold}$backup${normal}"
+  #       } || {
+  #         failure "Could not back up existing configuration, aborting"
+  #         return 1
+  #       }
+  #     fi
 
-#     {
-#       KUBECONFIG=~/.kube/config:"$CLUSTERCONFIG" "$HOMEBREW_PREFIX/bin/kubectl" config view --raw >~/.kube/config.new
-#       cp ~/.kube/config.new ~/.kube/config
-#       success "Merged cluster configuration into ${bold}$HOME/.kube/config${normal}"
-#     } || {
-#       failure "Could not merge configuration, aborting"
-#       return 1
-#     }
-#   }
-#   echo "Existing cluster configuration will be backed up before creating a new config file."
-#   read -r -p "Do you wish to proceed?
-# (y/n)>" yn
-#   case $yn in
-#   [Yy]*) setup_cluster_access || failure "Could not set up cluster access" ;; # don't fail here
-#   *) echo "Skipping cluster access setup" ;;
-#   esac
+  #     {
+  #       KUBECONFIG=~/.kube/config:"$CLUSTERCONFIG" "$HOMEBREW_PREFIX/bin/kubectl" config view --raw >~/.kube/config.new
+  #       cp ~/.kube/config.new ~/.kube/config
+  #       success "Merged cluster configuration into ${bold}$HOME/.kube/config${normal}"
+  #     } || {
+  #       failure "Could not merge configuration, aborting"
+  #       return 1
+  #     }
+  #   }
+  #   echo "Existing cluster configuration will be backed up before creating a new config file."
+  #   read -r -p "Do you wish to proceed?
+  # (y/n)>" yn
+  #   case $yn in
+  #   [Yy]*) setup_cluster_access || failure "Could not set up cluster access" ;; # don't fail here
+  #   *) echo "Skipping cluster access setup" ;;
+  #   esac
 
   # Always set kubeconfig file permissions
   # for only user read/write
@@ -1020,152 +1019,152 @@ authenticate() {
   # ACE Hub User Configuration File
   ############################################################
 
-#   echo
-#   echo "${bold}Updating ACE Hub authentication${normal}"
+  #   echo
+  #   echo "${bold}Updating ACE Hub authentication${normal}"
 
-#   context="lion"
-#   user_namespace="${USERNAME}-workspace"
+  #   context="lion"
+  #   user_namespace="${USERNAME}-workspace"
 
-#   function create_acehub_userconfigurationfile() {
-#     warning "Could not update ACE Hub authentication secrets, creating user configuration file as a fallback."
+  #   function create_acehub_userconfigurationfile() {
+  #     warning "Could not update ACE Hub authentication secrets, creating user configuration file as a fallback."
 
-#     ACE_HUB_USER_FILE="$HOME/Downloads/ace-hub-userconfiguration.json"
+  #     ACE_HUB_USER_FILE="$HOME/Downloads/ace-hub-userconfiguration.json"
 
-#     [ -f "$ACE_HUB_USER_FILE" ] && rm "$ACE_HUB_USER_FILE"
-#     mkdir -p "$HOME/Downloads/" && touch "$ACE_HUB_USER_FILE"
+  #     [ -f "$ACE_HUB_USER_FILE" ] && rm "$ACE_HUB_USER_FILE"
+  #     mkdir -p "$HOME/Downloads/" && touch "$ACE_HUB_USER_FILE"
 
-#     cat <<EOF >"$ACE_HUB_USER_FILE"
-# {
-# 	"env": {},
-# 	"envFiles": {
-# 		"NETRC": "machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN",
-# 		"REGISTRY_AUTH_FILE": "{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}",
-# 		"ACE_DT_TELEMETRY_USERNAME": "$USERNAME"
-# 	},
-# 	"ips": {
-# 		"act3": {
-# 			"registry": "reg.git.act3-ace.com",
-# 			"username": "$USERNAME",
-# 			"password": "$TOKEN"
-# 		}
-# 	},
-# 	"userLaunchTemplates": {}
-# }
-# EOF
-#     success "Created ACE Hub user configuration file ${bold}${ACE_HUB_USER_FILE}${normal}"
-#     warning_yellow "This file must be imported to ACE Hub to use your credentials."
-#     finish_tasks+=("- Import User Configuration File to ACE Hub")
-#     finish_tasks+=("  1. Go to ${bold}https://hub.ace.act3.ai/settings${normal}")
-#     finish_tasks+=("  2. Click ${bold}Import Config${normal}")
-#     finish_tasks+=("  3. Select ${bold}${ACE_HUB_USER_FILE}${normal}")
-#     finish_tasks+=("  4. Check the box for ${bold}Overwrite${normal}")
-#     finish_tasks+=("  5. Click ${bold}Import${normal}")
-#     finish_tasks+=("  6. Delete the file ${bold}${ACE_HUB_USER_FILE}${normal} from your system")
-#   }
+  #     cat <<EOF >"$ACE_HUB_USER_FILE"
+  # {
+  # 	"env": {},
+  # 	"envFiles": {
+  # 		"NETRC": "machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN",
+  # 		"REGISTRY_AUTH_FILE": "{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}",
+  # 		"ACE_DT_TELEMETRY_USERNAME": "$USERNAME"
+  # 	},
+  # 	"ips": {
+  # 		"act3": {
+  # 			"registry": "reg.git.act3-ace.com",
+  # 			"username": "$USERNAME",
+  # 			"password": "$TOKEN"
+  # 		}
+  # 	},
+  # 	"userLaunchTemplates": {}
+  # }
+  # EOF
+  #     success "Created ACE Hub user configuration file ${bold}${ACE_HUB_USER_FILE}${normal}"
+  #     warning_yellow "This file must be imported to ACE Hub to use your credentials."
+  #     finish_tasks+=("- Import User Configuration File to ACE Hub")
+  #     finish_tasks+=("  1. Go to ${bold}https://hub.ace.act3.ai/settings${normal}")
+  #     finish_tasks+=("  2. Click ${bold}Import Config${normal}")
+  #     finish_tasks+=("  3. Select ${bold}${ACE_HUB_USER_FILE}${normal}")
+  #     finish_tasks+=("  4. Check the box for ${bold}Overwrite${normal}")
+  #     finish_tasks+=("  5. Click ${bold}Import${normal}")
+  #     finish_tasks+=("  6. Delete the file ${bold}${ACE_HUB_USER_FILE}${normal} from your system")
+  #   }
 
-#   function kubectl_apply() {
-#     echo "$1" | log_out "$HOMEBREW_PREFIX/bin/kubectl" apply \
-#       --context="$context" --namespace="$user_namespace" -f -
-#   }
+  #   function kubectl_apply() {
+  #     echo "$1" | log_out "$HOMEBREW_PREFIX/bin/kubectl" apply \
+  #       --context="$context" --namespace="$user_namespace" -f -
+  #   }
 
-#   function namespace_exists() {
-#     log_eval "$HOMEBREW_PREFIX/bin/kubectl" get namespaces --context="$1" --field-selector="metadata.name=$2"
-#   }
+  #   function namespace_exists() {
+  #     log_eval "$HOMEBREW_PREFIX/bin/kubectl" get namespaces --context="$1" --field-selector="metadata.name=$2"
+  #   }
 
-#   function create_acehub_secrets() {
-#     context="lion"
-#     user_namespace="${USERNAME}-workspace"
+  #   function create_acehub_secrets() {
+  #     context="lion"
+  #     user_namespace="${USERNAME}-workspace"
 
-    # If user is not logged into ACT3 GitLab in browser, OIDC login will open a browser window
-    # box_out "If a browser window opens to the GitLab login page, log in with your ACT3 account"
+  # If user is not logged into ACT3 GitLab in browser, OIDC login will open a browser window
+  # box_out "If a browser window opens to the GitLab login page, log in with your ACT3 account"
 
-    # Check if user namespace exists
-    # if namespace_exists "$context" "$user_namespace"; then
-    #   success "User namespace ${user_namespace} exists in cluster ${context}"
-    # else
-    #   failure "User namespace ${user_namespace} does not exist in cluster ${context}"
+  # Check if user namespace exists
+  # if namespace_exists "$context" "$user_namespace"; then
+  #   success "User namespace ${user_namespace} exists in cluster ${context}"
+  # else
+  #   failure "User namespace ${user_namespace} does not exist in cluster ${context}"
 
-    #   create_issue_link="https://git.act3-ace.com/devsecops/ace-project/-/issues/new?issuable_template=Add%20User"
-    #   echo
-    #   echo "Create an issue requesting cluster access:"
-    #   echo "${bold}${create_issue_link}${normal}"
-    #   echo
-    #   warning_yellow "Skipping secret creation"
-    #   finish_tasks+=("- Create an issue requesting cluster access:")
-    #   finish_tasks+=("  ${bold}${create_issue_link}${normal})")
-    #   return 1
-    # fi
+  #   create_issue_link="https://git.act3-ace.com/devsecops/ace-project/-/issues/new?issuable_template=Add%20User"
+  #   echo
+  #   echo "Create an issue requesting cluster access:"
+  #   echo "${bold}${create_issue_link}${normal}"
+  #   echo
+  #   warning_yellow "Skipping secret creation"
+  #   finish_tasks+=("- Create an issue requesting cluster access:")
+  #   finish_tasks+=("  ${bold}${create_issue_link}${normal})")
+  #   return 1
+  # fi
 
-    # echo "Refreshing ACE Hub image pull secret..."
+  # echo "Refreshing ACE Hub image pull secret..."
 
-    # Delete existing secret
-    # if ! log_eval "$HOMEBREW_PREFIX/bin/kubectl" delete secret act3 --ignore-not-found \
-    #   --context "$context" -n "$user_namespace"; then
-    #   failure "Could not delete secret/act3"
-    #   return 1
-    # fi
+  # Delete existing secret
+  # if ! log_eval "$HOMEBREW_PREFIX/bin/kubectl" delete secret act3 --ignore-not-found \
+  #   --context "$context" -n "$user_namespace"; then
+  #   failure "Could not delete secret/act3"
+  #   return 1
+  # fi
 
-    # Create new secret
-    # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret docker-registry act3 \
-    #   --docker-server reg.git.act3-ace.com \
-    #   --docker-username "$USERNAME" \
-    #   --docker-password "$TOKEN" \
-    #   --context "$context" -n "$user_namespace"; then
-    #   success "Created secret/act3"
-    # else
-    #   failure "Could not create secret/act3"
-    #   return 1
-    # fi
+  # Create new secret
+  # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret docker-registry act3 \
+  #   --docker-server reg.git.act3-ace.com \
+  #   --docker-username "$USERNAME" \
+  #   --docker-password "$TOKEN" \
+  #   --context "$context" -n "$user_namespace"; then
+  #   success "Created secret/act3"
+  # else
+  #   failure "Could not create secret/act3"
+  #   return 1
+  # fi
 
-    # Label new secret
-    # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret act3 hub.act3-ace.io/secret-type=ips \
-    #   --context "$context" -n "$user_namespace"; then
-    #   success "Added label hub.act3-ace.io/secret-type=ips"
-    # else
-    #   failure "Could not add label hub.act3-ace.io/secret-type=ips"
-    #   return 1
-    # fi
+  # Label new secret
+  # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret act3 hub.act3-ace.io/secret-type=ips \
+  #   --context "$context" -n "$user_namespace"; then
+  #   success "Added label hub.act3-ace.io/secret-type=ips"
+  # else
+  #   failure "Could not add label hub.act3-ace.io/secret-type=ips"
+  #   return 1
+  # fi
 
-    # Add managed-by label
-    # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret act3 app.kubernetes.io/managed-by=act3-login \
-    #   --context "$context" -n "$user_namespace"; then
-    #   success "Added label app.kubernetes.io/managed-by=act3-login"
-    # else
-    #   failure "Could not add label app.kubernetes.io/managed-by=act3-login"
-    #   return 1
-    # fi
+  # Add managed-by label
+  # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret act3 app.kubernetes.io/managed-by=act3-login \
+  #   --context "$context" -n "$user_namespace"; then
+  #   success "Added label app.kubernetes.io/managed-by=act3-login"
+  # else
+  #   failure "Could not add label app.kubernetes.io/managed-by=act3-login"
+  #   return 1
+  # fi
 
-    # echo "Refreshing ACE Hub env file secret..."
+  # echo "Refreshing ACE Hub env file secret..."
 
-    # Delete existing secret
-    # if ! log_eval "$HOMEBREW_PREFIX/bin/kubectl" delete secret hub-envfile --ignore-not-found \
-    #   --context "$context" -n "$user_namespace"; then
-    #   failure "Could not delete secret/hub-envfile"
-    #   return 1
-    # fi
+  # Delete existing secret
+  # if ! log_eval "$HOMEBREW_PREFIX/bin/kubectl" delete secret hub-envfile --ignore-not-found \
+  #   --context "$context" -n "$user_namespace"; then
+  #   failure "Could not delete secret/hub-envfile"
+  #   return 1
+  # fi
 
-    # Create new secret
-    # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret generic hub-envfile \
-    #   --from-literal=NETRC="machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN" \
-    #   --from-literal=REGISTRY_AUTH_FILE="{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}" \
-    #   --from-literal=ACE_DT_TELEMETRY_USERNAME="$USERNAME" \
-    #   --context "$context" -n "$user_namespace"; then
-    #   success "Created secret/hub-envfile"
-    # else
-    #   failure "Could not create secret/hub-envfile"
-    #   return 1
-    # fi
+  # Create new secret
+  # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" create secret generic hub-envfile \
+  #   --from-literal=NETRC="machine git.act3-ace.com\n  login $USERNAME\n  password $TOKEN" \
+  #   --from-literal=REGISTRY_AUTH_FILE="{\"auths\": {\"reg.git.act3-ace.com\": {\"auth\": \"$(echo -n "$USERNAME:$TOKEN" | base64)\"}}}" \
+  #   --from-literal=ACE_DT_TELEMETRY_USERNAME="$USERNAME" \
+  #   --context "$context" -n "$user_namespace"; then
+  #   success "Created secret/hub-envfile"
+  # else
+  #   failure "Could not create secret/hub-envfile"
+  #   return 1
+  # fi
 
-    # Label new secret
-    # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-envfile hub.act3-ace.io/secret-type=envfile \
-    #   --context "$context" -n "$user_namespace"; then
-    #   success "Added label hub.act3-ace.io/secret-type=envfile"
-    # else
-    #   failure "Could not add label hub.act3-ace.io/secret-type=envfile"
-    #   return 1
-    # fi
+  # Label new secret
+  # if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-envfile hub.act3-ace.io/secret-type=envfile \
+  #   --context "$context" -n "$user_namespace"; then
+  #   success "Added label hub.act3-ace.io/secret-type=envfile"
+  # else
+  #   failure "Could not add label hub.act3-ace.io/secret-type=envfile"
+  #   return 1
+  # fi
 
-    # Add managed-by label
+  # Add managed-by label
   #   if log_eval "$HOMEBREW_PREFIX/bin/kubectl" label secret hub-envfile app.kubernetes.io/managed-by=act3-login \
   #     --context "$context" -n "$user_namespace"; then
   #     success "Added label app.kubernetes.io/managed-by=act3-login"

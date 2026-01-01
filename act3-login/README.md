@@ -65,7 +65,7 @@ The **ACT3 Login script** will automatically:
 #### Run ACT3 Login
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login | bash -c -
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login | bash
 ```
 
 ### Optional Usage

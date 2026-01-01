@@ -24,7 +24,7 @@ The **Smart Card Reader script** will automatically:
 ### Recommended Usage
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/smart-card-reader/enable-smart-card-reader | bash -c -
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/smart-card-reader/enable-smart-card-reader | bash
 ```
 
 ### Optional Usage
