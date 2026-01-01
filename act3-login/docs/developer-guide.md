@@ -12,20 +12,20 @@ ACT3 Login is divided into components:
 
 The script runs in the following order:
 
-1. The user starts the first script with the one line command in the README.
-2. The entrypoint loads helper functions.
-3. The setup portion of the script runs.
-   - Verifies that all system prerequisites are met.
-   - Adds the ACT3 Homebrew tap and installs dependencies.
-   - Prompts the user for a GitLab URL and Personal Access Token.
-   - Validates token input with GitLab to confirm its existence, scope, and active status.
-4. The authentication portion of the script runs.
-   - Executes all authentication setup and storage tasks.
-   - Generates a new SSH key and adds it to GitLab.
-   - Configures HTTPS credentials for GitLab.
-   - Configures Git commit signing with SSH.
-   - Prompts the user for a GitLab container registry URL.
-   - Sets up authentication for ACT3 Project Tool and GitLab CLI.
+1. The user starts the first script with the one line command in the README
+2. The entrypoint loads helper functions
+3. The setup portion of the script runs
+   - Verifies that all system prerequisites are met
+   - Adds the ACT3 Homebrew tap and installs dependencies
+   - Prompts the user for a GitLab URL and Personal Access Token
+   - Validates token input with GitLab to confirm its existence, scope, and active status
+4. The authentication portion of the script runs
+   - Executes all authentication setup and storage tasks
+   - Generates a new SSH key and adds it to GitLab
+   - Configures HTTPS credentials for GitLab
+   - Configures Git commit signing with SSH
+   - Prompts the user for a GitLab container registry URL
+   - Sets up authentication for ACT3 Project Tool and GitLab CLI
    - Prompts user to install DoD certificates
 
 ## Where Credentials Are Stored
@@ -46,15 +46,16 @@ graph TD
   %%noauth(("No Authentication!")):::noauth
   %%text[(Plaintext)]:::insecure
 
+  start ~~~ act3pt[act3-pt]:::tool
   start ~~~ git[git]:::tool
   start ~~~ brew:::tool
   start ~~~ regtools[Registry tools:<br>ace-dt,<br>podman,<br>docker]:::tool
-  start ~~~ act3pt[act3-pt]:::tool
 
-  %% Container Registry Authentication
-  regtools --> regauth{"Container Registry Auth<br>~/.docker/config.json<br>credHelpers/credsStore"}
-  regauth -->|secretservice<br>osxkeychain| keychain
-  %%dockerconf -->|none| text
+  %% Homebrew Authentication
+  brew -->|Update Taps| gitauth
+  brew -->|"Install ACT3 Formula"| formula{Formula download<br>strategy}
+  formula -->|"Uses Git <br>to clone <br>"| gitauth
+  formula -->|"Uses oras to<br>download from<br> registry"| regauth
 
   %% Git Authentication
   git --> gitauth{Git Authentication}
@@ -63,11 +64,12 @@ graph TD
   gch -->|"libsecret<br>osxkeychain"| keychain
   %%gch -->|"none"| noauth
 
-  %% Homebrew Authentication
-  brew -->|Update Taps| gitauth
-  brew -->|"Install ACT3 Formula"| formula{Formula download<br>strategy}
-  formula -->|"Uses Git <br>to clone <br>"| gitauth
-  formula -->|"Uses oras to<br>download from<br> registry"| regauth
+  %% Container Registry Authentication
+  regtools --> regauth{"Container Registry Auth<br>~/.docker/config.json<br>credHelpers/credsStore"}
+  regauth -->|secretservice<br>osxkeychain| keychain
+  %%dockerconf -->|none| text
+
+
 
   %% ACT3 Project Tool
   act3pt -->|"Accessing GitLab API"| gokr{"go-keyring Go package"}
