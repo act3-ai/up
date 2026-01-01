@@ -2,52 +2,43 @@
 
 ## Intended Audience
 
-The **Smart Card Reader (SCR) script** is designed for users running Ubuntu 22.04 who have not configured their machine to recognize and use a smart card reader (e.g. a CAC reader).
+The **Smart Card Reader script** is designed for Ubuntu 22.04 (or higher) users who need to install and configure their system to work with a smart card reader (e.g. a CAC reader).
 
-> macOS or Windows have built-in support for smart card readers and do not need to run this script
+> macOS and Windows have built-in support for smart card readers so those users do not need to run this script
 
 ## Overview
 
-Running the script does the following:
+The **Smart Card Reader script** will automatically:
 
-- Installs:
+- Install:
   - OpenSC
   - Middleware libraries and tools required to read the CAC
   - CACKey
-- Enables pcscd
-
-The smart card reader configuration can be checked with the [Verification Process](#verification-process).
+- Enable pcscd
 
 ## Usage
 
+> [! TIP]
+> The smart card reader configuration can be checked with the [Verification Process](#verification-process).
+
 ### Recommended Usage
 
-Ubuntu users who need to install and configure their system to work with a smart card reader should complete the following:
-
-Run the [`enable-smart-card-reader` script](./enable-smart-card-reader).
-
 ```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/act3-login/act3-login)"
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/smart-card-reader/enable-smart-card-reader | bash
 ```
 
 ### Optional Usage
 
-#### Clone Repo and Run
-
-Clone the [ACEup](https://github.com/act3-ace/aceup) repository to your system:
+Clone the [Up](https://github.com/act3-ai/up) repository to your system:
 
 ```sh
-# SSH Authentication
-git clone ssh://git@github.com/act3-ace/aceup.git
-
-# HTTPS Authentication
-git clone https://github.com/act3-ace/aceup.git
+git clone git@github.com:act3-ai/up.git
 ```
 
 Then, run the [`enable-smart-card-reader` script](./enable-smart-card-reader):
 
 ```sh
-./aceup/smart-card-reader/enable-smart-card-reader
+./up/smart-card-reader/enable-smart-card-reader
 ```
 
 ### Verification Process
@@ -73,8 +64,14 @@ Slot 0 (0x0): Broadcom Corp 5880 [Contacted SmartCard] (0123456789ABCD) 00 00
   pin min/max        : 4/8
 ```
 
-## Support
+> [!TIP]
+> Uninstalling the Snap version of Firefox may cause the `pcscd` daemon to stop running and/or not be initiated after reboot. Consult the [Troubleshooting FAQ](../docs/troubleshooting-faq.md), as needed.
 
-- **[Troubleshooting FAQ](faq.md)**: consult list of frequently asked questions and their answers.
-- **[Create a support ticket](https://github.com/act3-ace/aceup/issues/new)**: create a support ticket issue on the ACEup GitHub project.
-- **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance.
+## Support
+<!-- act3-pt ignore -->
+<!-- act3-pt ../docs/support.md section:support -->
+<!-- timestamp:2025-10-29,09:24:22 -->
+- **[Troubleshooting FAQ](../docs/troubleshooting-faq.md)**: consult a list of troubleshooting options and frequently asked questions
+- **[Create a Support Ticket issue](https://github.com/act3-ai/up/issues)**: create a support ticket issue on the Up GitHub project
+
+<!-- act3-pt end -->

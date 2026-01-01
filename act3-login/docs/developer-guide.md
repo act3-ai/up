@@ -2,25 +2,31 @@
 
 ## Components
 
-ACT3 Login is divided into three components:
+ACT3 Login is divided into components:
 
-- A public script that acts as the entrypoint
-- A private script that contains all authentication setup and storage
-- A public utility script that loads helper functions for output formatting, standard tasks, and system checks
+- A script that acts as the entrypoint and handles setup
+- A script that contains authentication and storage tasks
+- A utility script that loads helper functions for output formatting, standard tasks, and system checks
 
 ## Execution
 
 The script runs in the following order:
 
-1. The user starts the public script with the one line command in the README.
-2. The public script calls the setup script to load helper functions
-3. The public script verifies that all system prerequisites are met
-4. The public script prompts the user for a GitLab Personal Access Token
-5. The token input is verified with GitLab to confirm its existence, scope, and active status
-6. The private script is downloaded using the token
-7. The public script hands off to the private script
-8. The private script calls the setup script to load helper functions
-9. The private script executes all authentication setup and storage tasks
+1. The user starts the first script with the one line command in the README
+2. The entrypoint loads helper functions
+3. The setup portion of the script runs
+   - Verifies that all system prerequisites are met
+   - Adds the ACT3 Homebrew tap and installs dependencies
+   - Prompts the user for a GitLab URL and Personal Access Token
+   - Validates token input with GitLab to confirm its existence, scope, and active status
+4. The authentication portion of the script runs
+   - Executes all authentication setup and storage tasks
+   - Generates a new SSH key and adds it to GitLab
+   - Configures HTTPS credentials for GitLab
+   - Configures Git commit signing with SSH
+   - Prompts the user for a GitLab container registry URL
+   - Sets up authentication for ACT3 Project Tool and GitLab CLI
+   - Prompts user to install DoD certificates
 
 ## Where Credentials Are Stored
 
@@ -37,21 +43,19 @@ graph TD
 
   keychain[(System Keychain<br>Linux: GNOME Keyring<br>macOS: Keychain)]:::secure
   ssh[("SSH Keys")]:::secure
-  oidc[("OpenID Connect (GitLab Login)")]:::secure
-  ips[("Image pull secret")]:::secure
   %%noauth(("No Authentication!")):::noauth
   %%text[(Plaintext)]:::insecure
 
+  start ~~~ act3pt[act3-pt]:::tool
   start ~~~ git[git]:::tool
   start ~~~ brew:::tool
   start ~~~ regtools[Registry tools:<br>ace-dt,<br>podman,<br>docker]:::tool
-  start ~~~ act3pt[act3-pt]:::tool
-  start ~~~ kubectl:::tool
 
-  %% Container Registry Authentication
-  regtools --> regauth{"Container Registry Auth<br>~/.docker/config.json<br>credHelpers/credsStore"}
-  regauth -->|secretservice<br>osxkeychain| keychain
-  %%dockerconf -->|none| text
+  %% Homebrew Authentication
+  brew -->|Update Taps| gitauth
+  brew -->|"Install ACT3 Formula"| formula{Formula download<br>strategy}
+  formula -->|"Uses Git <br>to clone <br>"| gitauth
+  formula -->|"Uses oras to<br>download from<br> registry"| regauth
 
   %% Git Authentication
   git --> gitauth{Git Authentication}
@@ -60,22 +64,17 @@ graph TD
   gch -->|"libsecret<br>osxkeychain"| keychain
   %%gch -->|"none"| noauth
 
-  %% Homebrew Authentication
-  brew -->|Update Taps| gitauth
-  brew -->|"Install ACT3 Formula"| formula{Formula download<br>strategy}
-  formula -->|"Uses Git to<br>clone from<br>GitLab"| gitauth
-  formula -->|"Uses oras to<br>download from<br>GitLab registry"| regauth
+  %% Container Registry Authentication
+  regtools --> regauth{"Container Registry Auth<br>~/.docker/config.json<br>credHelpers/credsStore"}
+  regauth -->|secretservice<br>osxkeychain| keychain
+  %%dockerconf -->|none| text
+
+
 
   %% ACT3 Project Tool
   act3pt -->|"Accessing GitLab API"| gokr{"go-keyring Go package"}
-  act3pt -->|"Accessing Git Repository"| gitauth
+  act3pt -->|"Accessing Git repository"| gitauth
   gokr -->|"secretservice<br>/usr/bin/security"| keychain
-
-  %% Cluster Access
-  kubectl -->|Basic cluster access| clusterconf{"Cluster configuration<br>~/.kube/config"}
-  clusterconf -->|oidc-connect| oidc
-  kubectl -->|Pull image| ips
-
 ```
 
 ## Development Rules

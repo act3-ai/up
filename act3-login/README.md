@@ -1,86 +1,94 @@
 # ACT3 Login
 
+## Intended Audience
+
+**ACT3 Login** simplifies authentication, credential storage, and setup steps for ACT3 team members.
+
 ## Overview
 
-ACT3 Login is designed to:
+**ACT3 Login** is designed to:
 
 - Authenticate users to ACT3 services
 - Promote secure credential management
 - Simplify system setup
 
-ACT3 Login does the following:
+## Features
 
-- Enables secure credential storage using your system's keychain
-- Adds the [ACT3 Homebrew Tap](https://github.com/act3-ai/homebrew-tap) for easy access to ACT3 software
-- Authentication for the following:
-  - Git over SSH and HTTPS
-    - Optional: Enable commit signing with SSH
-  - ACT3 GitLab Container Registry
-  - ACT3 Project Tool (`act3-pt`)
-  - ACE Hub
-    - User must import the generated User Configuration file on ACE Hub
-  - Optional: ACT3 Kubernetes cluster access
-    - Creates a Kubernetes Secret in the user's namespace
+The **ACT3 Login script** will automatically:
+
+- Authenticate to a user-defined GitLab instance including:
+  - Prompt for and validating your GitLab Personal Access Token
+  - Create an SSH key and add it to GitLab
+  - Enable secure credential storage for Git and container registry authentication
+  - Enable Git commit signing with your SSH key
+- Add Homebrew taps for public resources ACT3 teams use
+- Add the ACT3 Homebrew tap (for access to public ACT3 software packages)
+- Prompt to run the DoD Certs script
 
 ## Prerequisites
 
-- Linux, macOS, or WSL2 running Ubuntu 22.04 (**Windows is only supported through WSL2**)
-- ACT3 Active Directory account
+- Linux, macOS, or WSL2 running Ubuntu 22.04 or higher (**Windows is only supported through WSL2**)
 - User account with sudo privileges on your system
   - List your sudo privileges with `sudo -l`
-- [curl](https://everything.curl.dev/) installed
+- [curl ↗](https://everything.curl.dev/) installed
   - Check your system for curl with `which curl`
-  - If missing, follow system-specific instructions from *Everything curl*: [Install curl](https://everything.curl.dev/get)
-- [Git](https://git-scm.com) installed
+  - If missing, follow system-specific instructions from *Everything curl*: [Install curl ↗](https://everything.curl.dev/get)
+- [Git ↗](https://git-scm.com) installed
   - Check your system for Git with `which git`
-  - If missing, follow system-specific instructions from Git: [Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Homebrew](https://brew.sh/) installed
+  - If missing, follow system-specific instructions from Git: [Install Git ↗](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Homebrew ↗](https://brew.sh/) installed
   - Check your system for Homebrew with `which brew`
-  - If missing, install with [Homebrew's installation script](https://brew.sh/) (*be sure to complete tasks under **Next Steps***)
+  - If missing, install with [Homebrew's installation script ↗](https://brew.sh/) (*be sure to complete tasks under **Next Steps***)
   - Check your installation of Homebrew by running `brew doctor`
-
-## Run ACT3 Login
-
-```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ace/aceup/main/act3-login/act3-login)"
-```
-
-> [!IMPORTANT]
->
-> Check the [prerequisites](#prerequisites) before running.
-
-## New User Setup
-
-After running the login script above, new users should also consider installing common ASCE Tools by running the `asce-tools` command:
-
-```sh
-brew asce-tools
-```
-
-## Features
-
-ACT3 Login uses your entered credentials to do the following:
-
-- Enable secure credential storage for Git and container registry authentication
-- Authenticate Git over SSH and HTTPS for the ACT3 GitLab
-- **OPTIONAL:** Enables Git commit signing with SSH
-- Store credentials for the ACT3 GitLab Container Registry to be used by tools like ACE Data Tool, Podman, and Docker
-- Add the ACT3 ACE Tools Homebrew tap, a catalog of tools used at ACT3, including internal tools like ACE Data Tool and ACT3 Project Tool
-- Log into the ACT3 GitLab instance with ACT3 Project Tool
-- Direct ACE Data Tool to use the ACT3 Telemetry server
-- Create an authenticated ACE Hub User Configuration file (note: this file must be imported manually)
-- **OPTIONAL:** Set up ACT3 Kubernetes cluster access
-- **OPTIONAL:** Create a Kubernetes Secret in the user's namespace
+- `ssh-agent` running
+  - Check your system for the agent status with `ssh-add -l; echo "Exit code: $?"`
+  - If the command fails with an exit code of 2, the ssh-agent is not running on your system.
+  - If not running, start the agent with `eval "$(ssh-agent -s)"`
+- [OpenSSL ↗](https://github.com/openssl/openssl/) 3.2 or higher (if running DoD Certs portion of ACT3 Login)
+  - Check your system for OpenSSL v3.2 or greater with `openssl version`
+  - If missing, install with Homebrew `brew install openssl` or consult the [OpenSSL documentation ↗](https://github.com/openssl/openssl/?tab=readme-ov-file#build-and-install) for alternatives
+  - Your terminal will need to be sourced or restarted for these changes to take effect.
 
 ## Caveats
 
-- ACT3 Login configures tools installed by Homebrew. Alternate installations of the same tools configured by ACT3 Login will produce unexpected behavior after running the script.
+- ACT3 Login configures tools installed by Homebrew. Using alternate installations of the same tools configured by ACT3 Login may produce unexpected behavior after running the script.
 - Existing configuration for some affected applications can override ACT3 Login's changes.
-  - If Podman is configured with an `auth.json` file for credentials, those credentials will be used rather than the keychain storage set up by ACT3 Login. Delete entries in `auth.json` corresponding to "reg.git.act3-ace.com" to fix this.
-  - ACE Data Tool configuration is never overwritten by ACT3 Login. Back up your existing ACE Data Tool config file and rerun ACT3 Login to see the config file it creates.
+- If Podman is configured with an `auth.json` file for credentials, those credentials will be used rather than the keychain storage set up by ACT3 Login.
+
+## Usage
+
+> [!IMPORTANT]
+> Check the [prerequisites](#prerequisites) before running.
+
+### Recommended Usage
+
+#### Run ACT3 Login
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login | bash
+```
+
+### Optional Usage
+
+#### Clone Repo and Run
+
+Clone the [Up](https://github.com/act3-ai/up) repository to your system:
+
+```sh
+git clone git@github.com:act3-ai/up.git
+```
+
+Then, run the [`act3-login` script](./act3-login):
+
+```sh
+./up/act3-login/act3-login
+```
 
 ## Support
+<!-- act3-pt ignore -->
+<!-- act3-pt ../docs/support.md section:support -->
+<!-- timestamp:2025-10-29,09:24:22 -->
+- **[Troubleshooting FAQ](../docs/troubleshooting-faq.md)**: consult a list of troubleshooting options and frequently asked questions
+- **[Create a Support Ticket issue](https://github.com/act3-ai/up/issues)**: create a support ticket issue on the Up GitHub project
 
-- **[Troubleshooting FAQ](docs/troubleshooting-faq.md)**: consult list of frequently asked questions and their answers.
-- **[Create a support ticket](https://github.com/act3-ace/aceup/issues/new)**: create a support ticket issue on the ACEup GitHub project.
-- **[Mattermost channel](https://chat.git.act3-ace.com/act3/channels/devops)**: create a post in the DevOps channel for assistance.
+<!-- act3-pt end -->

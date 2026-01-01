@@ -57,17 +57,9 @@ odie() {
 }
 
 # Helm Plugins
-# https://github.com/jkroepke/helm-secrets/wiki/Installation#using-helm-plugin-manager
-# https://github.com/chartmuseum/helm-push#install
-# https://github.com/aslafy-z/helm-git#install
 # https://github.com/databus23/helm-diff#using-helm-plugin-manager--23x
-# https://github.com/hypnoglow/helm-s3#install
 helm_plugins=(
-	'secrets=https://github.com/jkroepke/helm-secrets'
-	'cm-push=https://github.com/chartmuseum/helm-push'
-	's3=https://github.com/aslafy-z/helm-git'
 	'diff=https://github.com/databus23/helm-diff'
-	's3=https://github.com/hypnoglow/helm-s3'
 )
 
 ohai "Installing helm plugins:"

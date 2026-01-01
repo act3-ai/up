@@ -44,21 +44,23 @@ is_wsl() {
 ############################################################
 # Prerequisites
 ############################################################
-
-CACHE="$XDG_CACHE_HOME/ace/aceup/dod-certs"
-rm -rf "$CACHE" && mkdir -p "$CACHE"
-
-# System Check
 echo -n "Checking system... "
+
+# Set default cache directory
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/asce/up/dod-certs"
 if is_wsl; then
   success "Detected Linux running on WSL"
 elif is_linux; then
   success "Detected Linux"
 elif is_macos; then
+  # Change default cache directory for macOS
+  CACHE="${XDG_CACHE_HOME:-$HOME/Library/Caches}/asce/up/dod-certs"
   success "Detected macOS"
 else
   warning "Detected unsupported OS \"${OSTYPE}\""
 fi
+
+rm -rf "$CACHE" && mkdir -p "$CACHE"
 
 ############################################################
 # Download latest DoD certs
@@ -78,7 +80,7 @@ curl -fsSL \
 
 # Verify the download's integrity with a checksum
 # Checksum string below will need to be updated each time new certificates are released
-checksum="2d2e0ae2c035b5842766b4e468f81907405f194f15955be27894781fbeda4803fa3027363c51bbf19853a8dba03bc0dc28b8a95e1a7a6436d121e1b0cacede7a"
+checksum="4027e220764ef53eff1aa3c312989fe9a426fcd429952638c8721619cafadb963f4a7300ca991ddec776627991528259586433af9c629b6c44326b0a4e461e0e"
 shaprogram="sha512sum --check --status"
 is_macos && shaprogram="shasum -a 512 --check --status" # use shasum program on macs
 
@@ -94,14 +96,14 @@ fi
 
 # Unzip the download
 unzip -q "$download" -d "$CACHE"
-success "Unzipped certificate package to $CACHE/certificates_pkcs7_v5_13_dod"
+success "Unzipped certificate package to $CACHE/Certificates_pkcs7_v5_14_DoD"
 
 ############################################################
 # Certificate parsing
 ############################################################
 
 # Use OpenSSL to write the certificates in ".crt" format
-openssl pkcs7 -in "$CACHE/certificates_pkcs7_v5_13_dod/certificates_pkcs7_v5_13_dod_der.p7b" -inform der -print_certs -out "$CACHE/dod_CAs.pem"
+openssl pkcs7 -in "$CACHE/Certificates_PKCS7_v5_14_DoD/Certificates_PKCS7_v5_14_DoD.der.p7b" -inform der -print_certs -out "$CACHE/dod_CAs.pem"
 
 # Parse the "dod_CAs.pem" file:
 # Separate each individual certificate into its own file
