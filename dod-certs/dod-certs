@@ -54,7 +54,7 @@ elif is_linux; then
   success "Detected Linux"
 elif is_macos; then
   # Change default cache directory for macOS
-  CACHE="${XDG_CACHE_HOME:-"$HOME/Library/Caches"}/asce/up/dod-certs"
+  CACHE="${XDG_CACHE_HOME:-$HOME/Library/Caches}/asce/up/dod-certs"
   success "Detected macOS"
 else
   warning "Detected unsupported OS \"${OSTYPE}\""
