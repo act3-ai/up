@@ -34,7 +34,7 @@ The **ACT3 Login script** will automatically:
 > Check the [prerequisites](./act3-login/README.md#prerequisites) before running.
 
 Run the **ACT3 Login script**:
-<!-- act3-pt ignore -->
+
 <!-- act3-pt ./act3-login/README.md section:run-act3-login -->
 <!-- timestamp:2025-10-31,11:06:08 -->
 ```sh
@@ -64,7 +64,7 @@ After the **DoD Certs script** has run, you can access the certs in `/usr/local/
 <!-- act3-pt end -->
 
 Run the **DoD Certs script**:
-<!-- act3-pt ignore -->
+
 <!-- act3-pt ./dod-certs/README.md section:curl-and-run -->
 <!-- timestamp:2025-10-30,10:07:11 -->
 ```sh
@@ -120,7 +120,7 @@ The **Smart Card Reader script** will automatically:
 <!-- act3-pt end -->
 
 Run the **Enable Smart Card Reader script**:
-<!-- act3-pt ignore -->
+
 <!-- act3-pt ./smart-card-reader/README.md section:recommended-usage -->
 <!-- timestamp:2025-10-30,10:07:11 -->
 ```sh
