@@ -50,7 +50,7 @@ Optionally, you can either curl the script or clone the repo and run the script.
 #### Curl and Run
 
 ```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs)"
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash -c -
 ```
 
 #### Clone Repo and Run
