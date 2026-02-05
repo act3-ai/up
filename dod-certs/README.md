@@ -32,7 +32,7 @@ Use the [ACT3 Login script](../act3-login/README.md) to install the DoD certs. R
 > [!IMPORTANT]
 > Check the [prerequisites for the ACT3 Login script](../act3-login/README.md#prerequisites).
 
-<!-- act3-pt ignore-->
+
 <!-- act3-pt ../act3-login/README.md section:run-act3-login -->
 <!-- timestamp:2025-10-31,11:06:08 -->
 ```sh
