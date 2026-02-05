@@ -32,13 +32,12 @@ Use the [ACT3 Login script](../act3-login/README.md) to install the DoD certs. R
 > [!IMPORTANT]
 > Check the [prerequisites for the ACT3 Login script](../act3-login/README.md#prerequisites).
 
-<!-- act3-pt ignore-->
-<!-- act3-pt ../act3-login/README.md section:run-act3-login -->
-<!-- timestamp:2025-10-31,11:06:08 -->
-```sh
-/usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login)"
-```
 
+<!-- act3-pt ../act3-login/README.md section:run-act3-login -->
+<!-- timestamp:2026-02-05,07:19:44 -->
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login)
+```
 <!-- act3-pt end -->
 
 To run the `dod-certs` script by itself, follow the [optional usage instructions](#optional-usage) below.
@@ -50,7 +49,7 @@ Optionally, you can either curl the script or clone the repo and run the script.
 #### Curl and Run
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash -c -
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash
 ```
 
 #### Clone Repo and Run

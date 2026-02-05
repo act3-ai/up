@@ -36,9 +36,9 @@ The **ACT3 Login script** will automatically:
 Run the **ACT3 Login script**:
 
 <!-- act3-pt ./act3-login/README.md section:run-act3-login -->
-<!-- timestamp:2026-01-01,13:22:55 -->
+<!-- timestamp:2026-02-05,07:19:44 -->
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login | bash -c -
+bash <(curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/act3-login/act3-login)
 ```
 <!-- act3-pt end -->
 
@@ -63,11 +63,11 @@ After the **DoD Certs script** has run, you can access the certs in `/usr/local/
 <!-- act3-pt end -->
 
 Run the **DoD Certs script**:
-
+<!-- act3-pt ignore -->
 <!-- act3-pt ./dod-certs/README.md section:curl-and-run -->
 <!-- timestamp:2026-01-01,13:22:55 -->
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash -c -
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/dod-certs/dod-certs | bash
 ```
 <!-- act3-pt end -->
 
@@ -119,11 +119,11 @@ The **Smart Card Reader script** will automatically:
 <!-- act3-pt end -->
 
 Run the **Enable Smart Card Reader script**:
-
+<!-- act3-pt ignore -->
 <!-- act3-pt ./smart-card-reader/README.md section:recommended-usage -->
 <!-- timestamp:2026-01-01,13:22:55 -->
 ```sh
-curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/smart-card-reader/enable-smart-card-reader | bash -c -
+curl -fsSL https://raw.githubusercontent.com/act3-ai/up/refs/heads/main/smart-card-reader/enable-smart-card-reader | bash
 ```
 <!-- act3-pt end -->
 
@@ -142,8 +142,8 @@ Approved for public release: distribution unlimited.
 
 ### Case Number
 
-| Date | Release Number | Description |
-| ---- | -------------- | ----------- |
+| Date | Release Number | Description     |
+|------|----------------|-----------------|
 | 2024 | AFRL-2024-1007 | Initial release |
 
 <!-- For subsequent releases
