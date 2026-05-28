@@ -839,13 +839,13 @@ authenticate() {
     fi
   fi
 
-  echo 'brew "act3-ai/tap/act3-pt"' | brew bundle --file=-
-  if log_eval "$HOMEBREW_PREFIX/bin/act3-pt" catalog add https://git.act3-ace.com/devsecops/blueprints/catalog.git; then
-    success "Added the ACT3 Blueprint Catalog"
-  else
-    failure "Failed to add the ACT3 Blueprint Catalog"
-    check_logs
-  fi
+  # echo 'brew "act3-ai/tap/act3-pt"' | brew bundle --file=-
+  # if log_eval "$HOMEBREW_PREFIX/bin/act3-pt" catalog add https://git.act3-ace.com/devsecops/blueprints/catalog.git; then
+  #   success "Added the ACT3 Blueprint Catalog"
+  # else
+  #   failure "Failed to add the ACT3 Blueprint Catalog"
+  #   check_logs
+  # fi
 
   ############################################################
   # ACE Data Tool Telemetry Server Configuration
